@@ -2,25 +2,45 @@
 namespace App\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 
 class GoDaddy
 {
+    protected ResponseInterface $response;
+
+
     public function __construct(protected array $arrConfig = [], protected HttpClientInterface $httpClient)
     { }
 
 
     public function getDomains() : array
     {
-        // 📚 https://developer.godaddy.com/doc/endpoint/domains
+        // 📚 https://developer.godaddy.com/doc/endpoint/domains#/v1/list
         $endpointAction = 'domains?statuses=ACTIVE&limit=750';
         return $this->makeRequest($endpointAction);
     }
 
 
+
+    public function get3rdLevelDomains(string $domain) : array
+    {
+        // 📚 https://developer.godaddy.com/doc/endpoint/domains#/v1/recordGet
+        $endpointAction = 'domains/' . $domain . "/records";
+        return $this->makeRequest($endpointAction);
+    }
+
+
+
+    public function getResponse() : ResponseInterface
+    {
+        return $this->response;
+    }
+
+
     protected function makeRequest(string $endpointAction) : array
     {
-        $response =
+        $this->response =
             $this->httpClient->request(
                 'GET',
                 $this->arrConfig["GoDaddy"]["endpoint"] . $endpointAction,
@@ -32,7 +52,7 @@ class GoDaddy
                 ]
             );
 
-            $content = $response->toArray();
+            $content = $this->response->toArray();
             return $content;
     }
 }
