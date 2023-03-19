@@ -76,10 +76,5 @@
             "type": "git",
             "url": "https://github.com/TurboLabIt/php-foreachable.git"
         }
-    },
-    "require-dev": {
-        "symfony/debug-bundle": "6.2.*",
-        "symfony/monolog-bundle": "^3.0",
-        "symfony/stopwatch": "6.2.*"
     }
 }
