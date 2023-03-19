@@ -21,13 +21,13 @@ PROJECT_DIR=/var/www/godaddy-tools/
 SCRIPT_DIR=/var/www/godaddy-tools/scripts/
 LOG_PATH=/var/www/godaddy-tools/var/log/cron_
 
-## auto-update
-00 8 * * * root bash ${SCRIPT_DIR}auto-update.sh >> ${LOG_PATH}auto-update.log 2>&1
-
 ## Disk cleaner
 30 8 * * * root bash ${SCRIPT_DIR}cleaner.sh >> ${LOG_PATH}cleaner.log 2>&1
 
+## auto-update
+0 9 * * * root bash ${SCRIPT_DIR}auto-update.sh >> ${LOG_PATH}auto-update.log 2>&1
+
 ## domain download
-0 9 * * * root bash ${SCRIPT_DIR}app-download-domains.sh >> ${LOG_PATH}app-download-domains.log 2>&1
+30 9 * * * root bash ${SCRIPT_DIR}app-download-domains.sh >> ${LOG_PATH}app-download-domains.log 2>&1
 
 ## 👇 If the last entry is missing a newline, cron will consider the file broken and refuse to run it 👇
