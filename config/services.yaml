@@ -31,7 +31,3 @@ services:
                     key: '%env(GODADDY_API_KEY)%'
                     secret: '%env(GODADDY_API_SECRET)%'
 
-    App\Command\DownloadDomainsCommand:
-        arguments:
-            $arrConfig:
-                config1: ''
