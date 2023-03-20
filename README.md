@@ -31,7 +31,7 @@ If you still want to run it manually:
 ````shell
 bash /var/www/godaddy-tools/scripts/app-download-domains.sh
 
-```
+````
 
 The generated files are in `/var/www/godaddy-tools/var/domains/*.csv`. CSV older than *some* days are deleted 
 via [cleaner.sh](https://github.com/TurboLabIt/godaddy-tools/blob/master/scripts/cleaner.sh) (executed via cron).
