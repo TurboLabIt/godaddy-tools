@@ -10,7 +10,7 @@ class GoDaddy
     protected ResponseInterface $response;
 
 
-    public function __construct(protected array $arrConfig = [], protected HttpClientInterface $httpClient)
+    public function __construct(protected array $arrConfig, protected HttpClientInterface $httpClient)
     { }
 
 
@@ -46,7 +46,7 @@ class GoDaddy
                 $this->arrConfig["GoDaddy"]["endpoint"] . $endpointAction,
                 [
                     'headers' => [
-                        'Authorization: sso-key ' 
+                        'Authorization: sso-key '
                             . $this->arrConfig["GoDaddy"]["key"] . ":" . $this->arrConfig["GoDaddy"]["secret"]
                     ]
                 ]
