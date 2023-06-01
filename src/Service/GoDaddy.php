@@ -17,7 +17,7 @@ class GoDaddy
     public function getDomains() : array
     {
         // 📚 https://developer.godaddy.com/doc/endpoint/domains#/v1/list
-        $endpointAction = 'domains?statuses=ACTIVE&limit=750';
+        $endpointAction = 'domains?statuses=ACTIVE&limit=750&includes=nameServers';
         return $this->makeRequest($endpointAction);
     }
 

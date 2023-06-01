@@ -34,10 +34,15 @@ class DownloadDomainsCommand extends BaseCommand
             return $me->GoDaddy->getDomains();
         });
 
-        $this->fxTitle("Filtering data...");
-        $this->filter2ndLevelDomainColumns($arrDomains);
+        $this
+            ->fxTitle("Filtering data...")
+            ->filter2ndLevelDomainColumns($arrDomains);
 
         $this->add3rdLevelDomains($arrDomains);
+
+        $this
+            ->fxTitle("Converting arrays to strings...")
+            ->arrayToString($arrDomains);
 
         $this->fxTitle("Building header...");
         $arrHeader  = [ array_keys($arrDomains[0]) ];
@@ -175,6 +180,20 @@ class DownloadDomainsCommand extends BaseCommand
         $arrCleanDomain = array_merge($arrRow, $arrCleanDomain);
 
         $arrDomains[] = $arrCleanDomain;
+        return $this;
+    }
+
+
+    protected function arrayToString(array &$domains) : static
+    {
+        foreach($domains as &$domain) {
+            foreach($domain as &$oneRow) {
+                if( is_array($oneRow) ) {
+                    $oneRow = implode(PHP_EOL, $oneRow);
+                }
+            }
+        }
+
         return $this;
     }
 }
