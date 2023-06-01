@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0273660194653a5122654750d4b31d52",
+    "content-hash": "d8db2b1d1cdd1670a251348dd35b6d23",
     "packages": [
         {
             "name": "doctrine/lexer",
@@ -3240,6 +3240,44 @@
             ],
             "description": "A minimal Symfony bundle to build your own CLI commands even faster",
             "time": "2023-05-05T12:36:06+00:00"
+        },
+        {
+            "name": "turbolabit/php-symfony-messenger",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TurboLabIt/php-symfony-messenger.git",
+                "reference": "30bd0c429114fbb54b62493cd299c8e0bacd012b"
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TurboLabIt\\Messengers\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "TurboLabIt\\Messengers\\tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Zane",
+                    "email": "info@turbolab.it"
+                }
+            ],
+            "description": "A collection of webclients to send messages to Slack, Facebook, Twitter, Telegram, ...",
+            "time": "2023-06-01T13:20:29+00:00"
         }
     ],
     "packages-dev": [],
@@ -3247,7 +3285,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "turbolabit/php-foreachable": 20,
-        "turbolabit/php-symfony-basecommand": 20
+        "turbolabit/php-symfony-basecommand": 20,
+        "turbolabit/php-symfony-messenger": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

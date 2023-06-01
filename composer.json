@@ -16,7 +16,8 @@
         "symfony/runtime": "6.2.*",
         "symfony/yaml": "6.2.*",
         "turbolabit/php-foreachable": "dev-main",
-        "turbolabit/php-symfony-basecommand": "dev-main"
+        "turbolabit/php-symfony-basecommand": "dev-main",
+        "turbolabit/php-symfony-messenger": "dev-main"
     },
     "config": {
         "allow-plugins": {
@@ -75,6 +76,10 @@
         "turbolabit/php-foreachable": {
             "type": "git",
             "url": "https://github.com/TurboLabIt/php-foreachable.git"
+        },
+        "turbolabit/php-symfony-messenger": {
+            "type": "git",
+            "url": "https://github.com/TurboLabIt/php-symfony-messenger.git"
         }
     }
 }

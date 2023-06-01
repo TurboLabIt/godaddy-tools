@@ -23,6 +23,10 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
+    App\EventListener\CommandFailureListener:
+        tags:
+            - { name: kernel.event_listener, method: onCommandFailure,  event: console.error }
+
     App\Service\GoDaddy:
         arguments:
             $arrConfig:
@@ -31,3 +35,10 @@ services:
                     key: '%env(GODADDY_API_KEY)%'
                     secret: '%env(GODADDY_API_SECRET)%'
 
+    TurboLabIt\Messengers\SlackMessenger:
+        arguments:
+            $arrConfig:
+                Slack:
+                    endpoints:
+                        main: '%env(APP_SLACK_ENDPOINT)%'
+                        errors: '%env(APP_SLACK_ENDPOINT_ERRORS)%'
