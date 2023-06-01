@@ -67,7 +67,7 @@ class DownloadDomainsCommand extends BaseCommand
 
             switch($httpStatus) {
 
-                // handle `HTTP/1.1 429 Too Many Requests [sic] returned`
+                // HTTP/1.1 429 Too Many Requests returned
                  case Response::HTTP_TOO_MANY_REQUESTS: {
 
                     $this->fxWarning( $ex->getMessage() );
@@ -89,6 +89,8 @@ class DownloadDomainsCommand extends BaseCommand
                     return $this->goDaddyApiCall($fx, ...$fxArguments);
                  }
             }
+
+            throw $ex;
         }
     }
 
@@ -98,13 +100,13 @@ class DownloadDomainsCommand extends BaseCommand
         $arrCleanDomains = [];
         foreach($arrDomains as $arrRow) {
 
-            $arrDomain = 
+            $arrDomain =
                 array_intersect_key(
                     // https://www.php.net/manual/en/function.array-intersect-key.php#126352
                     array_replace(self::CSV_COLUMNS_2ND_LEVEL_DOMAINS, $arrRow),
                     self::CSV_COLUMNS_2ND_LEVEL_DOMAINS
                 );
-                
+
             $arrDomain          = array_merge($arrDomain, static::CSV_COLUMNS_3RD_LEVEL_DOMAINS);
             $arrCleanDomains[]  = $arrDomain;
         }
@@ -123,9 +125,29 @@ class DownloadDomainsCommand extends BaseCommand
             $domain = $arrRow["domain"];
 
             $this->fxTitle("Retriving 3rd level domains from GoDaddy for ##" . $domain . "##...");
-            $arrDataFromGoDaddy = $this->goDaddyApiCall(function($me, $domain) {
-                return $me->GoDaddy->get3rdLevelDomains($domain);
-            }, $domain);
+
+            try {
+
+                $arrDataFromGoDaddy = $this->goDaddyApiCall(function($me, $domain) {
+                    return $me->GoDaddy->get3rdLevelDomains($domain);
+                }, $domain);
+
+            } catch(ClientException) {
+
+                $response   = $this->GoDaddy->getResponse();
+                $httpStatus = $response->getStatusCode();
+
+                switch($httpStatus) {
+
+                    // this domain has no records (it's probably used just for 3rd-party NS management)
+                    case Response::HTTP_NOT_FOUND: {
+
+                        $this->fxWarning("This domain has no 3rd levels!");
+                        continue 2;
+                    }
+                }
+            }
+
 
             $this->fxTitle("Adding 3rd level domains for ##" . $domain . "##...");
             foreach($arrDataFromGoDaddy as $arrOne3rdLevelData) {
@@ -143,7 +165,7 @@ class DownloadDomainsCommand extends BaseCommand
         $arrRow = self::CSV_COLUMNS_2ND_LEVEL_DOMAINS;
         $arrRow["domain"] = $domain;
 
-        $arrCleanDomain = 
+        $arrCleanDomain =
             array_intersect_key(
                 // https://www.php.net/manual/en/function.array-intersect-key.php#126352
                 array_replace(self::CSV_COLUMNS_3RD_LEVEL_DOMAINS, $arrOne3rdLevelData),
