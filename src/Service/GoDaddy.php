@@ -17,10 +17,9 @@ class GoDaddy
     public function getDomains() : array
     {
         // 📚 https://developer.godaddy.com/doc/endpoint/domains#/v1/list
-        $endpointAction = 'domains?statuses=ACTIVE&limit=750&includes=nameServers';
+        $endpointAction = 'domains?statuses=ACTIVE,PENDING_DNS_ACTIVE&limit=750&includes=nameServers';
         return $this->makeRequest($endpointAction);
     }
-
 
 
     public function get3rdLevelDomains(string $domain) : array
@@ -29,7 +28,6 @@ class GoDaddy
         $endpointAction = 'domains/' . $domain . "/records";
         return $this->makeRequest($endpointAction);
     }
-
 
 
     public function getResponse() : ResponseInterface

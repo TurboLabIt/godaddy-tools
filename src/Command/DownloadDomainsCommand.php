@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DownloadDomainsCommand extends BaseCommand
 {
     const CSV_COLUMNS_2ND_LEVEL_DOMAINS = [
-        'createdAt' => null, 'domain' => null, 'expires' => null,
+        'createdAt' => null, 'domain' => null, 'status' => null, 'expires' => null,
         'nameServers' => null, 'renewAuto' => null
     ];
 
