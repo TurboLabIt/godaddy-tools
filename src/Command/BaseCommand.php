@@ -1,11 +1,9 @@
 <?php declare(strict_types=1);
 namespace App\Command;
 
-use TurboLabIt\PhpSymfonyBasecommand\Command\AbstractBaseCommand;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use TurboLabIt\BaseCommand\Command\AbstractBaseCommand;
 use App\Service\GoDaddy;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use TurboLabIt\BaseCommand\Service\ProjectDir;
 
 
 abstract class BaseCommand extends AbstractBaseCommand
@@ -14,16 +12,8 @@ abstract class BaseCommand extends AbstractBaseCommand
     const CSV_DEFAULT_DELIMITER = '|';
 
 
-    public function __construct(
-        protected GoDaddy $GoDaddy, protected ParameterBagInterface $parameterBag
-    ) {
-        parent::__construct();
-    }
-
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function __construct(protected GoDaddy $GoDaddy, protected ?ProjectDir $projectDir)
     {
-        parent::execute($input, $output);
-        return AbstractBaseCommand::SUCCESS;
+        parent::__construct([], null, null, $projectDir);
     }
 }

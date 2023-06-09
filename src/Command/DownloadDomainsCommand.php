@@ -4,7 +4,6 @@ namespace App\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -49,11 +48,9 @@ class DownloadDomainsCommand extends BaseCommand
         $arrDomains = array_merge($arrHeader, $arrDomains);
 
         $this->fxTitle("Output...");
-        $arrCsvPath = [
-            static::CSV_OUT_FOLDER_NAME, date("Y-m-d") . "-domains.csv"
-        ];
+        $arrCsvPath = [static::CSV_OUT_FOLDER_NAME, date("Y-m-d") . "-domains.csv"];
 
-        $this->writeCsvToVarArrayPath($arrCsvPath, $arrDomains, false, static::CSV_DEFAULT_DELIMITER);
+        $this->writeCsvToVarPath($arrCsvPath, $arrDomains, false, static::CSV_DEFAULT_DELIMITER);
 
         return $this->endWithSuccess();
     }

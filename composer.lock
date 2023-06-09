@@ -3208,7 +3208,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TurboLabIt/php-symfony-basecommand.git",
-                "reference": "0e6868c58a3bb317da975b73e4a36d41eea629c7"
+                "reference": "8ee6fc48f72b4db74d4068079471ff9b52eec34f"
             },
             "require": {
                 "league/csv": "@stable",
@@ -3219,18 +3219,22 @@
                 "symfony/translation-contracts": "@stable"
             },
             "require-dev": {
-                "phpunit/phpunit": "@stable"
+                "phpunit/phpunit": "@stable",
+                "symfony/config": "^6.3",
+                "symfony/dependency-injection": "^6.3",
+                "symfony/http-kernel": "^6.3",
+                "symfony/yaml": "^6.3"
             },
             "default-branch": true,
-            "type": "library",
+            "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
-                    "TurboLabIt\\PhpSymfonyBasecommand\\": "src/"
+                    "TurboLabIt\\BaseCommand\\": "src/"
                 }
             },
             "autoload-dev": {
                 "psr-4": {
-                    "TurboLabIt\\PhpSymfonyBasecommand\\tests\\": "tests/"
+                    "TurboLabIt\\BaseCommand\\tests\\": "tests/"
                 }
             },
             "authors": [
@@ -3239,7 +3243,7 @@
                 }
             ],
             "description": "A minimal Symfony bundle to build your own CLI commands even faster",
-            "time": "2023-05-05T12:36:06+00:00"
+            "time": "2023-06-09T09:22:59+00:00"
         },
         {
             "name": "turbolabit/php-symfony-messenger",
@@ -3247,7 +3251,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/TurboLabIt/php-symfony-messenger.git",
-                "reference": "30bd0c429114fbb54b62493cd299c8e0bacd012b"
+                "reference": "0f450c9fb6c6cd7b0cef96613ba8842ac0732be7"
             },
             "require": {
                 "php": "^8.0"
@@ -3277,7 +3281,7 @@
                 }
             ],
             "description": "A collection of webclients to send messages to Slack, Facebook, Twitter, Telegram, ...",
-            "time": "2023-06-01T13:20:29+00:00"
+            "time": "2023-06-01T16:46:29+00:00"
         }
     ],
     "packages-dev": [],
