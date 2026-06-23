@@ -2,7 +2,7 @@
 namespace App\EventListener;
 
 use Symfony\Component\Console\Event\ConsoleErrorEvent;
-use TurboLabIt\Messengers\SlackMessenger;
+use TurboLabIt\MessengersBundle\SlackMessenger;
 
 
 class CommandFailureListener

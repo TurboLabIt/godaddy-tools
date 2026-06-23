@@ -35,7 +35,7 @@ services:
                     key: '%env(GODADDY_API_KEY)%'
                     secret: '%env(GODADDY_API_SECRET)%'
 
-    TurboLabIt\Messengers\SlackMessenger:
+    TurboLabIt\MessengersBundle\SlackMessenger:
         arguments:
             $arrConfig:
                 Slack:
