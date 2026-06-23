@@ -34,11 +34,3 @@ services:
                     endpoint: '%env(GODADDY_API_ENDPOINT)%'
                     key: '%env(GODADDY_API_KEY)%'
                     secret: '%env(GODADDY_API_SECRET)%'
-
-    TurboLabIt\MessengersBundle\SlackMessenger:
-        arguments:
-            $arrConfig:
-                Slack:
-                    endpoints:
-                        main: '%env(APP_SLACK_ENDPOINT)%'
-                        errors: '%env(APP_SLACK_ENDPOINT_ERRORS)%'
