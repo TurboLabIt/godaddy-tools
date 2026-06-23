@@ -106,4 +106,4 @@ drivers/geckodriver
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 
-
+/env
