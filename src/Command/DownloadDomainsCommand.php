@@ -6,6 +6,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\HttpClient\ResponseInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 
 
 #[AsCommand(
@@ -75,10 +77,9 @@ class DownloadDomainsCommand extends BaseCommand
                     $this->fxWarning( $ex->getMessage() );
                     $this->fxInfo("Waiting and retrying...");
 
-                    $content = $response->toArray(false);
-                    $sleepForSec = $content["retryAfterSec"] ?? 45;
+                    $sleepForSec = $this->getRetryAfterSec($response);
 
-                    // add some more dalay, just in case
+                    // add some more delay, just in case
                     $sleepForSec += 3;
 
                     $countdownSection = $this->output->section();
@@ -94,6 +95,36 @@ class DownloadDomainsCommand extends BaseCommand
 
             throw $ex;
         }
+    }
+
+
+    /**
+     * Determine how long to wait before retrying after an HTTP 429.
+     *
+     * GoDaddy signals the delay via the standard "Retry-After" response header.
+     * Its 429 body is frequently empty, so we must NOT rely on toArray() alone:
+     * Symfony's toArray() throws JsonException("Response body is empty.") on an
+     * empty body even when $throw is false, and that exception is not a
+     * ClientException, so it would escape the retry handler and kill the command.
+     */
+    protected function getRetryAfterSec(ResponseInterface $response) : int
+    {
+        $defaultSec = 45;
+
+        // 1) Standard "Retry-After" header (don't throw on the 4xx status)
+        $retryAfterHeader = $response->getHeaders(false)["retry-after"][0] ?? null;
+        if( $retryAfterHeader !== null && ctype_digit((string)$retryAfterHeader) ) {
+            return (int)$retryAfterHeader;
+        }
+
+        // 2) Fall back to the JSON body's "retryAfterSec", guarding an empty/non-JSON body
+        try {
+            $sleepForSec = $response->toArray(false)["retryAfterSec"] ?? $defaultSec;
+        } catch(DecodingExceptionInterface) {
+            $sleepForSec = $defaultSec;
+        }
+
+        return (int)$sleepForSec;
     }
 
 
