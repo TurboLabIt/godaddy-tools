@@ -78,5 +78,11 @@
             "config/packages/routing.yaml",
             "config/routes.yaml"
         ]
+    },
+    "turbolabit/php-symfony-basecommand": {
+        "version": "dev-main"
+    },
+    "turbolabit/php-symfony-messenger": {
+        "version": "dev-main"
     }
 }
